@@ -1,5 +1,55 @@
 import json
 import os
+import random
+import string
+
+
+# записываем в массив out_list содержимое N необходимых строк по каждому файлу
+
+def create_list_of_each_file(files, configurationPath):
+    # num_files = len(files)
+    out_list = []
+    for i in range(len(files)):
+        filepath = os.path.join(configurationPath, files[i])
+        out = {}
+        i_out_list = []
+        # открываем i-й файл
+        with open(filepath, 'r') as f:
+            # считываем все строчки в файле
+            lines = f.readlines()
+            for k in range(len(files)):
+                file_str = lines[k].rstrip()
+                i_out_list.append(file_str)
+        out_list.append(i_out_list)
+    return out_list
+
+
+def create_itog_file(files, out_list, res):
+    # записываем в словарь out_dict содержимое N необходимых строк по k-й строке
+    out_dict = {}
+    # i - номер строки, k - номер файла
+    for i in range(len(files)):
+        out_dict_i = {}
+        for k in range(len(out_list)):
+            # k+1 - номер файла начиная с 1, out_list[k][i] - значение в строке i
+            out_dict_i[str(k + 1)] = out_list[k][i]
+        out_dict[str(i + 1)] = out_dict_i
+    res["out"] = out_dict
+    print(res)
+    return res
+
+
+def random_string(prefix, maxlen):
+    symbols = string.ascii_letters * 10
+    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+
+
+def write_to_file(res):
+    out_filepath = "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_out/" + random_string("out_file",
+                                                                                                          10) + ".txt"
+    with open(out_filepath, "w", encoding="utf-8") as file:
+        json.dump(res, file)
+
 
 # В случае режима dir - берем путь из параметра path и все файлы в этой директории. Можно считать, что файлов не много и они все текстовые, поддиректорий нет
 # На верхнем уровне записать путь к файлу конфигурации, номер конфигурации, состав конфигурации,
@@ -15,9 +65,17 @@ def test_open_json_file(load_file):
     if configurationMode == "dir":
         res.update({"configFile": configFile, "configurationID": configurationID, "configuratioData": configuratioData,
                     "out": "вв"})
+
+        files = os.listdir(configurationPath)
+        out_list = create_list_of_each_file(files, configurationPath)
+        res = create_itog_file(files, out_list, res)
+        write_to_file(res)
+
+        '''
         files = os.listdir(configurationPath)
         num_files = len(files)
         # записываем в массив out_list содержимое N необходимых строк по каждому файлу
+        
         out_list = []
         for i in range(num_files):
             filepath = os.path.join(configurationPath, files[i])
@@ -31,18 +89,4 @@ def test_open_json_file(load_file):
                     file_str = lines[k].rstrip()
                     i_out_list.append(file_str)
             out_list.append(i_out_list)
-
-        # записываем в словарь out_dict содержимое N необходимых строк по k-й строке
-        out_dict = {}
-        # i - номер строки, k - номер файла
-        for i in range(num_files):
-            out_dict_i = {}
-            for k in range(len(out_list)):
-                # k+1 - номер файла начиная с 1, out_list[k][i] - значение в строке i
-                out_dict_i[str(k + 1)] = out_list[k][i]
-            out_dict[str(i + 1)] = out_dict_i
-        res["out"] = out_dict
-        print(res)
-
-        with open("C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_out/out_file.txt", "w", encoding="utf-8") as file:
-            json.dump(res, file)
+'''
