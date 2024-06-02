@@ -4,14 +4,15 @@ import random
 import string
 
 
-# записываем в массив out_list содержимое N необходимых строк по каждому файлу
-
-def create_list_of_each_file(files, configurationPath):
-    # num_files = len(files)
+def create_list_of_each_file(files, configurationPath, configurationMode):
+    # записываем в массив out_list содержимое N необходимых строк по каждому файлу
     out_list = []
     for i in range(len(files)):
-        filepath = os.path.join(configurationPath, files[i])
-        out = {}
+        if configurationMode == "dir":
+            filepath = os.path.join(configurationPath, files[i])
+        elif configurationMode == "path":
+            filepath = files[i]
+        #out = {}
         i_out_list = []
         # открываем i-й файл
         with open(filepath, 'r') as f:
@@ -61,32 +62,15 @@ def test_open_json_file(load_file):
     configurationID = load_file.get("id")
     configurationPath = load_file.get("path")
     configurationMode = load_file.get("mode")
-    configuratioData = {"mode": configurationMode, "path": configurationPath}
+    configurationData = {"mode": configurationMode, "path": configurationPath}
+    res.update(
+        {"configFile": configFile, "configurationID": configurationID, "configurationData": configurationData})
     if configurationMode == "dir":
-        res.update({"configFile": configFile, "configurationID": configurationID, "configuratioData": configuratioData,
-                    "out": "вв"})
-
         files = os.listdir(configurationPath)
-        out_list = create_list_of_each_file(files, configurationPath)
-        res = create_itog_file(files, out_list, res)
-        write_to_file(res)
 
-        '''
-        files = os.listdir(configurationPath)
-        num_files = len(files)
-        # записываем в массив out_list содержимое N необходимых строк по каждому файлу
-        
-        out_list = []
-        for i in range(num_files):
-            filepath = os.path.join(configurationPath, files[i])
-            out = {}
-            i_out_list = []
-            # открываем i-й файл
-            with open(filepath, 'r') as f:
-                # считываем все строчки в файле
-                lines = f.readlines()
-                for k in range(num_files):
-                    file_str = lines[k].rstrip()
-                    i_out_list.append(file_str)
-            out_list.append(i_out_list)
-'''
+    elif configurationMode == "path":
+        files = configurationPath
+
+    out_list = create_list_of_each_file(files, configurationPath, configurationMode)
+    res = create_itog_file(files, out_list, res)
+    write_to_file(res)
