@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "mode": "path",
+    "path": ["C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/file1/1.txt",
+      "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/file2/2.txt",
+      "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/file3/3.txt",
+      "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/file4/4.txt",
+      "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/file5/5.txt",
+      "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/file6/6.txt"]
+  },
+  {
+    "id": 2,
+    "mode": "dir",
+    "path": "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/dirs"
+  },
+  {
+    "id": 3,
+    "mode": "dir",
+    "path": "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/dirs"
+  },
+  {
+    "id": 4,
+    "mode": "dir",
+    "path": "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/dirs"
+  },
+  {
+    "id": 5,
+    "mode": "dir",
+    "path": "C:/Users/Mukhina-V/PycharmProjects/Aquarius_training/json_files_in/dirs"
+  }
+]

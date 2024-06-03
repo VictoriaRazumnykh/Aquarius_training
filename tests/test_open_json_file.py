@@ -12,7 +12,6 @@ def create_list_of_each_file(files, configurationPath, configurationMode):
             filepath = os.path.join(configurationPath, files[i])
         elif configurationMode == "path":
             filepath = files[i]
-        #out = {}
         i_out_list = []
         # открываем i-й файл
         with open(filepath, 'r') as f:
@@ -40,6 +39,7 @@ def create_itog_file(files, out_list, res):
     return res
 
 
+# для записи в итоговый файл названия out_file + набор символов
 def random_string(prefix, maxlen):
     symbols = string.ascii_letters * 10
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
